@@ -1,0 +1,17 @@
+#
+# rgl layout text file (v4.0) - raygui layout file generated using rGuiLayout
+#
+# Number of controls:     5
+#
+# Ref. window:    r <x> <y> <width> <height>
+# Anchor info:    a <id> <name> <posx> <posy> <enabled>
+# Control info:   c <id> <type> <name> <rectangle> <anchor_id> <text>
+#
+r 0 40 -1 -1
+a 001 anchor01 352 112 1
+a 002 anchor02 344 296 1
+c 000 5 Nigger Anihilator 496 256 200 48 0 SAMPLE TEXT
+c 001 0 WindowBox001 0 0 472 296 1 SAMPLE TEXT
+c 002 9 ToggleGroup002 176 200 40 24 1 ONE;TWO;THREE
+c 003 9 ToggleGroup003 168 80 40 24 1 ONE;TWO;THREE
+c 004 3 Panel004 312 112 120 36 1 
