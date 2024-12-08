@@ -6,6 +6,10 @@ include(FetchContent)
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+message(STATUS "Using compiler: ${CMAKE_CXX_COMPILER}")
 # Dependencies
 set(RAYLIB_VERSION 5.5)
 
@@ -20,10 +24,12 @@ FetchContent_MakeAvailable(raylib)
 
 # Our Project
 add_executable(${PROJECT_NAME})
-add_subdirectory(rguilayout/src)
+add_subdirectory(src)
 
 add_executable(second generated_code/layout_name.c)
 add_executable(flappy-bird flappy-bird/src/main.cpp)
+
+
 
 set_target_properties(flappy-bird PROPERTIES LINKER_LANGUAGE CXX)
 

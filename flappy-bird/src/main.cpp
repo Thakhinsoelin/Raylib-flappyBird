@@ -1,13 +1,14 @@
 #include "raylib.h"
 #include "raygui.h"
-#include "raymath.h"
 
 #define RRES_IMPLEMENTATION
 #include "../../rres/src/rres.h"
 
 #define RRES_RAYLIB_IMPLEMENTATION
 #include "../../rres/src/rres-raylib.h"
-#include <print>
+
+#define MAX_BIRD_SPEED     15
+#define MIN_BIRD_SPEED      1
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 640
@@ -33,7 +34,6 @@ Texture2D loadImageWithTexture(Texture textureToChange, Image image) {
 int main(int argc, char** argv) {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flappy Bird");
     SetTargetFPS(60);
-    int num_of_back = 5;
     Image backgrounds[5] = {0};
     backgrounds[0] = LoadImage("resources/Background/Background1.png");
     backgrounds[1] = LoadImage("resources/Background/Background2.png");
@@ -58,6 +58,17 @@ int main(int argc, char** argv) {
     rresUnloadResourceChunk(chunkTex);
     rresUnloadCentralDirectory(dir);
 
+
+    Texture2D bird = LoadTexture("resources/Player/StyleBird1/Bird1-2.png");
+    Vector2 bird_pos = { 50, 50};
+    Rectangle birdRec = { 0.0f, 0.0f, (float)bird.width/4, (float)bird.height };
+    int currentFrame = 0;
+
+    int framesCounter = 0;
+    int framesSpeed = 4;            // Number of spritesheet frames shown by second
+
+    
+
     Image tiles = LoadImage("resources/Tiles/Style 1/PipeStyle1.png");
     Image tile_arr[8] = {0};
     tile_arr[0] = ImageCopy(tiles);
@@ -68,6 +79,8 @@ int main(int argc, char** argv) {
     tile_arr[5] = ImageCopy(tiles);
     tile_arr[6] = ImageCopy(tiles);
     tile_arr[7] = ImageCopy(tiles);
+
+
 
     for(int i = 0; i < 8; i++) {
         int tempx = 32 * i;
@@ -120,14 +133,37 @@ int main(int argc, char** argv) {
     Image current = backgrounds[4];
     Texture2D background_t = LoadTextureFromImage(current);
     
+    int frame = 0;
+
+    int ani_frames = 4;
+    
+
     int x1 = 0;
     int x2 = BACK_WIDTH;
+
+    
+
     while (!WindowShouldClose())
     {
+        framesCounter++;
         float deltaTime = GetFrameTime();
+
+        if (framesCounter >= (60/framesSpeed))
+        {
+            framesCounter = 0;
+            currentFrame++;
+
+            if (currentFrame > 5) currentFrame = 0;
+
+            birdRec.x = (float)currentFrame*(float)bird.width/4;
+        }
+
+        if (framesSpeed > MAX_BIRD_SPEED) framesSpeed = MAX_BIRD_SPEED;
+        else if (framesSpeed < MIN_BIRD_SPEED) framesSpeed = MIN_BIRD_SPEED;
+
         if (IsKeyPressed(KEY_SPACE))
         {
-            std::print("Space is pressed");
+            printf("Space is pressed");
         } else if (IsKeyPressed(KEY_ENTER)) {
             num_of_back++;
             if(num_of_back > 4) {
@@ -136,7 +172,13 @@ int main(int argc, char** argv) {
             current = backgrounds[num_of_back];
             loadImageWithTexture(background_t, current);
         }
-        
+
+        frame++;
+        if(frame/4 >= ani_frames) {
+            frame= 0;
+        }
+
+
         BeginDrawing();
             if(x1 <= -BACK_WIDTH) x1 = BACK_WIDTH;
             if(x2 <= -BACK_WIDTH) x2 = BACK_WIDTH; 
@@ -146,12 +188,13 @@ int main(int argc, char** argv) {
             DrawTextureEx(background_t, {.x = (float)x1, .y = 0}, 0, 2.5, WHITE);
             DrawTextureEx(background_t, {.x = (float)x2, .y = 0}, 0, 2.5, WHITE);
 
-            DrawTexture(testTexture, 300,300, WHITE);
+            // DrawTexture(testTexture, 300,300, WHITE);
             //tile test
             DrawTexture(tileTextureTest1, 0, 0, WHITE);
             DrawTexture(tileTextureTest2, 50, 0, WHITE);
             // DrawTextureEx(background_t, {.x = 0, .y = 0},0,2,PURPLE);
-            
+            DrawTextureRec(bird, birdRec, bird_pos, WHITE);
+
         EndDrawing();
         x1--;
         x2--;
