@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-IC:/dev/cproj/Raylib-flappyBird/build/_deps/raylib-src/src]
