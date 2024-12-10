@@ -32,14 +32,17 @@ Texture2D loadImageWithTexture(Texture textureToChange, Image image) {
 }
 
 int main(int argc, char** argv) {
+
+    int back_counter = 0;
+
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flappy Bird");
     SetTargetFPS(60);
-    Image backgrounds[5] = {0};
-    backgrounds[0] = LoadImage("resources/Background/Background1.png");
-    backgrounds[1] = LoadImage("resources/Background/Background2.png");
-    backgrounds[2] = LoadImage("resources/Background/Background3.png");
-    backgrounds[3] = LoadImage("resources/Background/Background4.png");
-    backgrounds[4] = LoadImage("resources/Background/Background5.png");
+    Texture2D backgrounds[5] = {0};
+    backgrounds[0] = LoadTexture("resources/Background/Background1.png");
+    backgrounds[1] = LoadTexture("resources/Background/Background2.png");
+    backgrounds[2] = LoadTexture("resources/Background/Background3.png");
+    backgrounds[3] = LoadTexture("resources/Background/Background4.png");
+    backgrounds[4] = LoadTexture("resources/Background/Background5.png");
 
     Texture testTexture = {};
 
@@ -60,7 +63,7 @@ int main(int argc, char** argv) {
 
 
     Texture2D bird = LoadTexture("resources/Player/StyleBird1/Bird1-2.png");
-    Vector2 bird_pos = { 50, 50};
+    Vector2 bird_pos = { 250, 250};
     Rectangle birdRec = { 0.0f, 0.0f, (float)bird.width/4, (float)bird.height };
     int currentFrame = 0;
 
@@ -110,19 +113,19 @@ int main(int argc, char** argv) {
                 break;
             }
             ImageCrop(&tile_arr[i], {
-                .x = (float)tempx,
-                .y = 0,
-                .width = 32,
-                .height = 80,
+                (float)tempx,
+                0,
+                32,
+                80,
             });
         }
 
         if(tempx <= 96) {
             ImageCrop(&tile_arr[i], {
-                .x = (float)tempx,
-                .y = 0,
-                .width = 32,
-                .height = 80
+                (float)tempx,
+                0,
+                32,
+                80
             });
         }
     }
@@ -130,8 +133,8 @@ int main(int argc, char** argv) {
     Texture2D tileTextureTest1 = LoadTextureFromImage(tile_arr[3]);
     Texture2D tileTextureTest2 = LoadTextureFromImage(tile_arr[6]);
 
-    Image current = backgrounds[4];
-    Texture2D background_t = LoadTextureFromImage(current);
+    
+    Texture2D background_t = backgrounds[4];
     
     int frame = 0;
 
@@ -165,12 +168,12 @@ int main(int argc, char** argv) {
         {
             printf("Space is pressed");
         } else if (IsKeyPressed(KEY_ENTER)) {
-            num_of_back++;
-            if(num_of_back > 4) {
-                num_of_back = 0;
+            back_counter++;
+            if (back_counter >= 5)
+            {
+                back_counter = 0;
             }
-            current = backgrounds[num_of_back];
-            loadImageWithTexture(background_t, current);
+            
         }
 
         frame++;
@@ -185,8 +188,10 @@ int main(int argc, char** argv) {
             // DrawTexture(background_t, x1, 0, WHITE);
             // DrawTexture(background_t, x2, 0, WHITE);
 
-            DrawTextureEx(background_t, {.x = (float)x1, .y = 0}, 0, 2.5, WHITE);
-            DrawTextureEx(background_t, {.x = (float)x2, .y = 0}, 0, 2.5, WHITE);
+            DrawTextureEx(backgrounds[back_counter], {(float)x1, 0}, 0, 2.5, WHITE);
+            DrawTextureEx(backgrounds[back_counter], {(float)x2, 0}, 0, 2.5, WHITE);
+
+            
 
             // DrawTexture(testTexture, 300,300, WHITE);
             //tile test
