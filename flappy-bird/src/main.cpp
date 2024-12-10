@@ -165,12 +165,7 @@ int main(int argc, char** argv) {
         {
             printf("Space is pressed");
         } else if (IsKeyPressed(KEY_ENTER)) {
-            num_of_back++;
-            if(num_of_back > 4) {
-                num_of_back = 0;
-            }
-            current = backgrounds[num_of_back];
-            loadImageWithTexture(background_t, current);
+            
         }
 
         frame++;
