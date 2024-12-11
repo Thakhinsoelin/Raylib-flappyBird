@@ -2,6 +2,8 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+
+#include "../../rgui/examples/styles/style_cyber.h"
 #include <time.h>
 
 #define RRES_IMPLEMENTATION
@@ -46,6 +48,9 @@ void DrawTextureRecEx(Texture2D texture, Rectangle source, Vector2 position, flo
 }
 
 int main(int argc, char** argv) {
+    Vector2 anchor01 = {100,100};
+    bool styleGuard = true;
+    bool ControlWindow = true;
 
     int back_counter = 0;
 
@@ -107,6 +112,11 @@ int main(int argc, char** argv) {
 
     while (!WindowShouldClose())
     {
+        if(styleGuard) {
+            GuiLoadStyleDefault();
+            GuiLoadStyleCyber();
+            styleGuard = false;
+        }
         framesCounter++;
         float deltaTime = GetFrameTime();
 
@@ -152,35 +162,62 @@ int main(int argc, char** argv) {
             DrawTextureEx(backgrounds[back_counter], {(float)x2, 0}, 0, 2.5, WHITE);
 
             
+            if (ControlWindow)
+            {
+                ControlWindow = !GuiWindowBox({ anchor01.x + 0, anchor01.y + 0, 296, 192 }, "SAMPLE TEXT");
+                GuiSliderBar({ anchor01.x + 144, anchor01.y + 40, 152, 16 }, "Bird Size", NULL, &bird_scale, 1, 8);
+                GuiSliderBar({ anchor01.x + 144, anchor01.y + 64, 152, 16 }, "Bird Animation Speed", NULL, &framesSpeed, 0, 8);
+                if (GuiButton({ anchor01.x + 144, anchor01.y + 88, 152, 24 }, "Change Background")) {
+                    back_counter++;
+                    if (back_counter >= 5)
+                    {
+                        back_counter = 0;
+                    }
+                }; 
+                if (GuiButton({ anchor01.x + 144, anchor01.y + 120, 152, 24 }, "Change Bird")) {
+                    currentBirdRow++;
+                    if (currentBirdRow >= 7)
+                    {
+                        currentBirdRow = 0;
+                    }
+                }; 
+                if (GuiButton({ anchor01.x + 144, anchor01.y + 152, 152, 24 }, "Change Entire Bird Sprite")) {
+                    currentBird++;
+                    if (currentBird > 1 )
+                    {
+                        currentBird = 0;
+                    }
+                }; 
+            }
 
             //Drawing controls
-            GuiSliderBar({330, 330, 100, 50}, "Bird_size", NULL, &bird_scale, 1, 7);
-            GuiSliderBar({330, 390, 100, 50}, "Bird Animation Speed", NULL, &framesSpeed, 1, 8);
-            if (GuiLabelButton({330, 450, 60, 20}, "Change Background")) {
-                back_counter++;
-                if (back_counter >= 5)
-                {
-                    back_counter = 0;
-                }
-            };
+            // GuiSliderBar({330, 330, 100, 50}, "Bird_size", NULL, &bird_scale, 1, 7);
+            // GuiSliderBar({330, 390, 100, 50}, "Bird Animation Speed", NULL, &framesSpeed, 1, 8);
+            // if (GuiLabelButton({330, 450, 60, 20}, "Change Background")) {
+            //     back_counter++;
+            //     if (back_counter >= 5)
+            //     {
+            //         back_counter = 0;
+            //     }
+            // };
 
-            if (GuiLabelButton({330, 475, 60, 20}, "Change Bird")) {
-                currentBirdRow++;
-                if (currentBirdRow >= 7)
-                {
-                    currentBirdRow = 0;
-                }
-            };
+            // if (GuiLabelButton({330, 475, 60, 20}, "Change Bird")) {
+            //     currentBirdRow++;
+            //     if (currentBirdRow >= 7)
+            //     {
+            //         currentBirdRow = 0;
+            //     }
+            // };
 
             
 
-            if (GuiLabelButton({330, 500, 60, 20}, "Change Entire Bird Sprite")) {
-                currentBird++;
-                if (currentBird > 1 )
-                {
-                    currentBird = 0;
-                }
-            };
+            // if (GuiLabelButton({330, 500, 60, 20}, "Change Entire Bird Sprite")) {
+            //     currentBird++;
+            //     if (currentBird > 1 )
+            //     {
+            //         currentBird = 0;
+            //     }
+            // };
 
             DrawTextureRecEx(birds[currentBird], birdRec, bird_pos, 0, bird_scale, WHITE);
             

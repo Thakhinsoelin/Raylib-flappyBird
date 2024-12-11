@@ -13,11 +13,12 @@
 **********************************************************************************************/
 
 #include "raylib.h"
+#include <stdbool.h>
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
-#include "../raygui/styles/cyber/style_cyber.h"
+#include "../rgui/styles/cyber/style_cyber.h"
 //----------------------------------------------------------------------------------
 // Controls Functions Declaration
 //----------------------------------------------------------------------------------
@@ -35,7 +36,8 @@ int main()
     int screenWidth = 800;
     int screenHeight = 450;
 
-    
+    bool isStyleActive = true;
+    int prevStyle = 3;
 
     InitWindow(screenWidth, screenHeight, "layout_name");
 
@@ -43,7 +45,7 @@ int main()
     //----------------------------------------------------------------------------------
     Vector2 anchor01 = { 120, 72 };
     
-    bool WindowBox000Active = true;
+    bool ControlWindow = true;
     float Bird_SizeValue = 0.0f;
     float Bird_Ani_SpeedValue = 0.0f;
     //----------------------------------------------------------------------------------
@@ -62,17 +64,23 @@ int main()
 
         // Draw
         //----------------------------------------------------------------------------------
-        if(true) {
-        GuiLoadStyleCyber();}
+        
+        if(isStyleActive) {
+            GuiLoadStyleDefault();
+            GuiLoadStyleCyber();
+
+            isStyleActive = false;
+        }
+
         BeginDrawing();
 
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR))); 
 
             // raygui: controls drawing
             //----------------------------------------------------------------------------------
-            if (WindowBox000Active)
+            if (ControlWindow)
             {
-                WindowBox000Active = !GuiWindowBox((Rectangle){ anchor01.x + 0, anchor01.y + 0, 296, 192 }, "SAMPLE TEXT");
+                ControlWindow = !GuiWindowBox((Rectangle){ anchor01.x + 0, anchor01.y + 0, 296, 192 }, "SAMPLE TEXT");
                 GuiSliderBar((Rectangle){ anchor01.x + 144, anchor01.y + 40, 152, 16 }, "Bird Size", NULL, &Bird_SizeValue, 0, 100);
                 GuiSliderBar((Rectangle){ anchor01.x + 144, anchor01.y + 64, 152, 16 }, "Bird Animation Speed", NULL, &Bird_Ani_SpeedValue, 0, 100);
                 if (GuiButton((Rectangle){ anchor01.x + 144, anchor01.y + 88, 152, 24 }, "Change Background")) BackgroundChange(); 
