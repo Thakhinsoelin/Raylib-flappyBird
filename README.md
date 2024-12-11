@@ -1,20 +1,58 @@
 -----------------------------------
 
 _DISCLAIMER:_
+This Game is still in Development
 
-Welcome to **raylib game template**!
-
-This template provides a base structure to start developing a small raylib game in plain C. The repo is also pre-configured with a default `LICENSE` (zlib/libpng) and a `README.md` (this one) to be properly filled by users. Feel free to change the LICENSE as required.
-
-All the sections defined by `$(Data to Fill)` are expected to be edited and filled properly. It's recommended to delete this disclaimer message after editing this `README.md` file.
-
-This template has been created to be used with raylib (www.raylib.com) and it's licensed under an unmodified zlib/libpng license.
-
-_Copyright (c) 2014-2024 Ramon Santamaria ([@raysan5](https://twitter.com/raysan5))_
+I am trying to create the flappy bird app
 
 -----------------------------------
-## Getting Started with this template
 
+## Requirements for building the game
+- git
+- cmake version 3.72 or higher
+- a compiler toolchain ( 
+    visual c compiler is preferred for windows,
+    you can use whatever compiler you want for other posix systems
+)
+
+
+## Building the Game
+Instructions are the same for every platforms
+
+- Clone the repo
+```sh
+git clone --recursive "https://github.com/Thakhinsoelin/Raylib-flappyBird.git"
+```
+- Make a seperate build directory
+```sh
+mkdir build
+```
+- cd into it
+```sh
+cd build
+```
+- Here use either cmake-gui or cmake ( use cmake-gui for better visual experience )
+```sh
+cmake-gui .
+```
+- When the cmake window appears, choose the root of the repo for CMake source and root/build for the build directory
+- Click Configure and Generate
+When generating finished, you will get the build system you chose
+If you chose visual studio 17 2022, you will get the visual studio solution file
+now you can just open the solution file and build it in the visual studio or build from the command line
+
+### Building visual studio project from command line
+  Make sure you are in the directory you generated the build files to
+  ```sh
+  cmake --build .
+  ```
+  It will generate a bunch of files
+  The game will be in project_root/flappy-bird/bin/${Build Type}/
+  cd into it and run
+
+Enjoy the game
+
+<!-- 
 You can use this templates in some ways. Using Visual Studio, using CMake or make your own build setup. This repository come with Visual Studio and CMake already setuped.
 
 Chose one of the follow setup, that fit in you development enviroment.
@@ -51,28 +89,24 @@ cmake --build build
 - Inside the build folder are another folder (named the same as the project name on CMakeLists.txt) with the executable and resources folder.
 - In order for resources to load properly, cd to `src` and run the executable (`../build/${PROJECT_NAME}/${PROJECT_NAME}`) from there.
 
-- cmake will automatically download a current release of raylib but if you want to use your local version you can pass `-DFETCHCONTENT_SOURCE_DIR_RAYLIB=<dir_with_raylib>` 
+- cmake will automatically download a current release of raylib but if you want to use your local version you can pass `-DFETCHCONTENT_SOURCE_DIR_RAYLIB=<dir_with_raylib>`  -->
 
-## $(Game Title)
-
-![$(Game Title)](screenshots/screenshot000.png "$(Game Title)")
+## $(Flappy Bird)
 
 ### Description
 
-$(Your Game Description)
+$(avoid the obstacles while flying)
 
 ### Features
 
- - $(Game Feature 01)
- - $(Game Feature 02)
- - $(Game Feature 03)
+ - Change Background 
+ - Change Bird
+ - Save / Load (not implemented)
 
 ### Controls
 
 Keyboard:
- - $(Game Control 01)
- - $(Game Control 02)
- - $(Game Control 03)
+ - Space_bar for making the bird fly
 
 ### Screenshots
 
@@ -80,15 +114,7 @@ _TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Developers
 
- - $(Developer 01) - $(Role/Tasks Developed)
- - $(Developer 02) - $(Role/Tasks Developed)
- - $(Developer 03) - $(Role/Tasks Developed)
-
-### Links
-
- - YouTube Gameplay: $(YouTube Link)
- - itch.io Release: $(itch.io Game Page)
- - Steam Release: $(Steam Game Page)
+ - $(SoeThiHa) - The Entire Game
 
 ### License
 
@@ -96,4 +122,4 @@ This game sources are licensed under an unmodified zlib/libpng license, which is
 
 $(Additional Licenses)
 
-*Copyright (c) $(Year) $(User Name) ($(User Twitter/GitHub Name))*
+*Copyright (c) $(2024) $(Thakhinsoelin) ($(NULL/jqoiwmxcv;lz))*
