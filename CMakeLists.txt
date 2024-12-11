@@ -24,7 +24,7 @@ FetchContent_MakeAvailable(raylib)
 
 # Our Project
 add_executable(${PROJECT_NAME})
-add_subdirectory(rguilayout/src)
+add_subdirectory(rglayout/src)
 
 add_executable(second generated_code/Bird_Control.c)
 add_executable(flappy-bird flappy-bird/src/main.cpp)
