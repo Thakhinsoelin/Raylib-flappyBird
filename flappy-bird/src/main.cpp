@@ -1,5 +1,8 @@
 #include "raylib.h"
+
+#define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
+#include <time.h>
 
 #define RRES_IMPLEMENTATION
 #include "../../rres/src/rres.h"
@@ -31,9 +34,22 @@ Texture2D loadImageWithTexture(Texture textureToChange, Image image) {
 
 }
 
+//Draw a part of a texture (defined by a rectangle) with 'pro' parameters 
+//NOTE: This scale the texture based on the source given. Not the entire texture
+//NOTE: origin is relative to destination rectangle size
+void DrawTextureRecEx(Texture2D texture, Rectangle source, Vector2 position, float rotation, float scale, Color tint) {
+    
+    Rectangle dest = { position.x, position.y, (float)source.width*scale, (float)source.height*scale };
+    Vector2 origin = { 0.0f, 0.0f };
+
+    DrawTexturePro(texture, source, dest, origin, rotation, tint);
+}
+
 int main(int argc, char** argv) {
 
     int back_counter = 0;
+
+    float bird_scale = 4;
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flappy Bird");
     SetTargetFPS(60);
@@ -62,77 +78,20 @@ int main(int argc, char** argv) {
     rresUnloadCentralDirectory(dir);
 
 
-    Texture2D bird = LoadTexture("resources/Player/StyleBird1/Bird1-2.png");
+    Texture2D birds[2] = {0};
+    birds[0] = LoadTexture("resources/Player/StyleBird1/AllBird1.png");
+
+    birds[1] = LoadTexture("resources/Player/StyleBird2/AllBird2.png");
+
+    int currentBird = 0;
+
     Vector2 bird_pos = { 250, 250};
-    Rectangle birdRec = { 0.0f, 0.0f, (float)bird.width/4, (float)bird.height };
+    Rectangle birdRec = { 0.0f, 0.0f, (float)birds[0].width/4, (float)birds[0].height/7 };
     int currentFrame = 0;
-
+    int currentBirdRow = 0;
     int framesCounter = 0;
-    int framesSpeed = 4;            // Number of spritesheet frames shown by second
-
+    float framesSpeed = 6;            // Number of spritesheet frames shown by second
     
-
-    Image tiles = LoadImage("resources/Tiles/Style 1/PipeStyle1.png");
-    Image tile_arr[8] = {0};
-    tile_arr[0] = ImageCopy(tiles);
-    tile_arr[1] = ImageCopy(tiles);
-    tile_arr[2] = ImageCopy(tiles);
-    tile_arr[3] = ImageCopy(tiles);
-    tile_arr[4] = ImageCopy(tiles);
-    tile_arr[5] = ImageCopy(tiles);
-    tile_arr[6] = ImageCopy(tiles);
-    tile_arr[7] = ImageCopy(tiles);
-
-
-
-    for(int i = 0; i < 8; i++) {
-        int tempx = 32 * i;
-        int tempy = 0;
-        if(tempx > 96) {
-            int rr = tempx / 32;
-            tempy = 80;
-            switch (rr)
-            {
-            case 4:
-                tempx = 0;
-                break;
-
-            case 5:
-                tempx = 32;
-                break;
-
-            case 6:
-                tempx = 64;
-                break;
-
-            case 7:
-                tempx = 96;
-                break;
-            
-            default:
-                break;
-            }
-            ImageCrop(&tile_arr[i], {
-                (float)tempx,
-                0,
-                32,
-                80,
-            });
-        }
-
-        if(tempx <= 96) {
-            ImageCrop(&tile_arr[i], {
-                (float)tempx,
-                0,
-                32,
-                80
-            });
-        }
-    }
-
-    Texture2D tileTextureTest1 = LoadTextureFromImage(tile_arr[3]);
-    Texture2D tileTextureTest2 = LoadTextureFromImage(tile_arr[6]);
-
     
     Texture2D background_t = backgrounds[4];
     
@@ -158,7 +117,8 @@ int main(int argc, char** argv) {
 
             if (currentFrame > 5) currentFrame = 0;
 
-            birdRec.x = (float)currentFrame*(float)bird.width/4;
+            birdRec.x = (float)currentFrame*(float)birds[0].width/4;
+            birdRec.y = (float)currentBirdRow*(float)birds[0].height/7;
         }
 
         if (framesSpeed > MAX_BIRD_SPEED) framesSpeed = MAX_BIRD_SPEED;
@@ -181,7 +141,7 @@ int main(int argc, char** argv) {
             frame= 0;
         }
 
-
+        
         BeginDrawing();
             if(x1 <= -BACK_WIDTH) x1 = BACK_WIDTH;
             if(x2 <= -BACK_WIDTH) x2 = BACK_WIDTH; 
@@ -193,12 +153,37 @@ int main(int argc, char** argv) {
 
             
 
-            // DrawTexture(testTexture, 300,300, WHITE);
-            //tile test
-            DrawTexture(tileTextureTest1, 0, 0, WHITE);
-            DrawTexture(tileTextureTest2, 50, 0, WHITE);
-            // DrawTextureEx(background_t, {.x = 0, .y = 0},0,2,PURPLE);
-            DrawTextureRec(bird, birdRec, bird_pos, WHITE);
+            //Drawing controls
+            GuiSliderBar({330, 330, 100, 50}, "Bird_size", NULL, &bird_scale, 1, 7);
+            GuiSliderBar({330, 390, 100, 50}, "Bird Animation Speed", NULL, &framesSpeed, 1, 8);
+            if (GuiLabelButton({330, 450, 60, 20}, "Change Background")) {
+                back_counter++;
+                if (back_counter >= 5)
+                {
+                    back_counter = 0;
+                }
+            };
+
+            if (GuiLabelButton({330, 475, 60, 20}, "Change Bird")) {
+                currentBirdRow++;
+                if (currentBirdRow >= 7)
+                {
+                    currentBirdRow = 0;
+                }
+            };
+
+            
+
+            if (GuiLabelButton({330, 500, 60, 20}, "Change Entire Bird Sprite")) {
+                currentBird++;
+                if (currentBird > 1 )
+                {
+                    currentBird = 0;
+                }
+            };
+
+            DrawTextureRecEx(birds[currentBird], birdRec, bird_pos, 0, bird_scale, WHITE);
+            
 
         EndDrawing();
         x1--;
