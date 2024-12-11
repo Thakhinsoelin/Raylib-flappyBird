@@ -47,13 +47,14 @@ int main()
     float Bird_SizeValue = 0.0f;
     float Bird_Ani_SpeedValue = 0.0f;
     //----------------------------------------------------------------------------------
-
+    bool exitWindow = false;
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!exitWindow)    // Detect window close button or ESC key
     {
+        exitWindow = WindowShouldClose();
         // Update
         //----------------------------------------------------------------------------------
         // TODO: Implement required update logic
@@ -61,7 +62,8 @@ int main()
 
         // Draw
         //----------------------------------------------------------------------------------
-        GuiLoadStyleCyber();
+        if(true) {
+        GuiLoadStyleCyber();}
         BeginDrawing();
 
             ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR))); 
