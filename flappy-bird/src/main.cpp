@@ -21,6 +21,8 @@
 #define BACK_WIDTH 640
 #define BACK_HEIGHT 640
 
+#define GRASS_HEIGHT 32
+#define GRASS_WIDTH 128 / 4
 struct Tile {
     Vector2 pos;
     Vector2 size;
@@ -101,8 +103,8 @@ int main(int argc, char** argv) {
     
     Texture2D tile = LoadTexture("resources/Tiles/Style 1/SimpleStyle1.png");
     Vector2 tilepos = {400, 0  };
-    Rectangle tileRec = {0.0f, 0.0f, (float)tile.width/4, (float)(tile.height * 2 /3)};
-    Rectangle grassRec = {0,(float)tile.height*2/3, (float)tile.width /2 , (float)tile.height};
+    Rectangle tileRec = {0.0f, 0.0f, (float)tile.width/4, (float)tile.height - GRASS_HEIGHT};
+    Rectangle grassRec = {0, (float)tileRec.height , (float)tile.width /4 , GRASS_HEIGHT};
     Rectangle grassPos = {0};
 
 
@@ -172,7 +174,20 @@ int main(int argc, char** argv) {
 
             DrawTextureEx(backgrounds[back_counter], {(float)x1, 0}, 0, 2.5, WHITE);
             DrawTextureEx(backgrounds[back_counter], {(float)x2, 0}, 0, 2.5, WHITE);
-            DrawTextureRecEx(tile, grassRec, {0, WINDOW_HEIGHT - (float)(backgrounds[back_counter].height * 2.5 / 3)}, 0, 2.5, WHITE);
+
+            // for(int i = 0; i < 2; i ++) {
+            // //     DrawTextureRecEx(tile, grassRec, {0 + (float)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            //         DrawTexturePro(tile, grassRec, {0 + (float)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5) + (float)(grassRec.width / 4 * i), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            // }
+
+            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 2), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 4), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 6), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 8), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            // DrawTexturePro(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+
+            // DrawTextureRecEx(tile, grassRec, {0,0}, 0, 2.5, WHITE);
+            // DrawTextureRec(tile, grassRec, {0, 500}, WHITE);
             
             // DrawTextureEx(backgrounds[back_counter], { scroller, 20 }, 0.0f, 2.5f, WHITE);
             // DrawTextureEx(backgrounds[back_counter], { backgrounds[back_counter].width*2 + scroller, 20 }, 0.0f, 2.5f, WHITE);
