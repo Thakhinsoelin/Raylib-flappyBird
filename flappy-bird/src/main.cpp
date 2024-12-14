@@ -23,6 +23,8 @@
 
 #define GRASS_HEIGHT 32
 #define GRASS_WIDTH 128 / 4
+#define GRAVITY 0.6
+
 struct Tile {
     Vector2 pos;
     Vector2 size;
@@ -125,9 +127,18 @@ int main(int argc, char** argv) {
     
     float grassScroll = 0;
     float grassScroll_b = grassScroll + BACK_WIDTH;
+
+    float vertSpeed = 0;
+    float jumpSpeed = 10;
+    bool startfalling = false;
+
+    float fallingConstant = 1;
     while (!WindowShouldClose())
     {
         float delta = GetFrameTime();
+        if(startfalling) {
+            bird_pos.y += GRAVITY;
+        }
         // scroller -= 1.f;
 
         // if (scroller <= -backgrounds[back_counter].width*2) scroller = 0;
@@ -156,7 +167,8 @@ int main(int argc, char** argv) {
 
         if (IsKeyPressed(KEY_SPACE))
         {
-            bird_pos.y -= fly * delta;
+            fallingConstant = -30;
+            startfalling = true;
             printf("Space is pressed\n");
         } else if (IsKeyPressed(KEY_ENTER)) {
             back_counter++;
@@ -165,9 +177,8 @@ int main(int argc, char** argv) {
                 back_counter = 0;
             }
             
-        } else if(IsKeyPressed(KEY_SPACE)) {
-            
         }
+        bird_pos.y += fallingConstant;
 
         frame++;
         if(frame/4 >= ani_frames) {
@@ -211,7 +222,7 @@ int main(int argc, char** argv) {
             
             if (ControlWindow)
             {
-                ControlWindow = !GuiWindowBox({ anchor01.x + 0, anchor01.y + 0, 296, 210 }, "SAMPLE TEXT");
+                ControlWindow = !GuiWindowBox({ anchor01.x + 0, anchor01.y + 0, 296, 260 }, "SAMPLE TEXT");
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 40, 152, 16 }, "Bird Size", NULL, &bird_scale, 1, 8);
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 64, 152, 16 }, "Bird Animation Speed", NULL, &framesSpeed, 0, 8);
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 88, 152, 16 }, "Background Speed", NULL, &background_speed, 1, 8);
@@ -236,6 +247,10 @@ int main(int argc, char** argv) {
                         currentBird = 0;
                     }
                 }; 
+                if (GuiButton({ anchor01.x + 144, anchor01.y + 152 + 24 + 30, 152, 24 }, "Reset bird position")) { 
+                    bird_pos = { 250, 250};
+                };
+                GuiSliderBar({ anchor01.x + 144, anchor01.y + 152 + 54 + 24, 152, 16 }, "falling Constant", NULL, &fallingConstant, 1, 8);
             }
 
             DrawTextureRec(tile, tileRec, tilepos, WHITE);
@@ -243,7 +258,7 @@ int main(int argc, char** argv) {
             
 
         EndDrawing();
-        bird_pos.y ++;
+        
         x1 -= background_speed;
         x2 -= background_speed;
         grassScroll -= background_speed;
