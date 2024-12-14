@@ -58,6 +58,10 @@ int main(int argc, char** argv) {
 
     float bird_scale = 4;
 
+    float gravity = 1000;
+
+    float fly = 1000;
+
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flappy Bird");
     SetTargetFPS(60);
     Texture2D backgrounds[5] = {0};
@@ -119,9 +123,11 @@ int main(int argc, char** argv) {
     int x2 = BACK_WIDTH;
     float background_speed = 1;
     
-
+    float grassScroll = 0;
+    float grassScroll_b = grassScroll + BACK_WIDTH;
     while (!WindowShouldClose())
     {
+        float delta = GetFrameTime();
         // scroller -= 1.f;
 
         // if (scroller <= -backgrounds[back_counter].width*2) scroller = 0;
@@ -150,13 +156,16 @@ int main(int argc, char** argv) {
 
         if (IsKeyPressed(KEY_SPACE))
         {
-            printf("Space is pressed");
+            bird_pos.y -= fly * delta;
+            printf("Space is pressed\n");
         } else if (IsKeyPressed(KEY_ENTER)) {
             back_counter++;
             if (back_counter >= 5)
             {
                 back_counter = 0;
             }
+            
+        } else if(IsKeyPressed(KEY_SPACE)) {
             
         }
 
@@ -169,6 +178,8 @@ int main(int argc, char** argv) {
         BeginDrawing();
             if(x1 <= -BACK_WIDTH) x1 = BACK_WIDTH;
             if(x2 <= -BACK_WIDTH) x2 = BACK_WIDTH; 
+            if(grassScroll <= -BACK_WIDTH) grassScroll = BACK_WIDTH;
+            if(grassScroll_b <= -BACK_WIDTH) grassScroll_b = BACK_WIDTH;
             // DrawTexture(background_t, x1, 0, WHITE);
             // DrawTexture(background_t, x2, 0, WHITE);
 
@@ -180,14 +191,19 @@ int main(int argc, char** argv) {
             //         DrawTexturePro(tile, grassRec, {0 + (float)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5) + (float)(grassRec.width / 4 * i), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
             // }
 
-            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 2), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 4), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 6), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 8), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            // DrawTexturePro(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 2), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 4), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 6), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 8), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
+            for(int i = 0; i < 8; i++) {
+                // DrawTexturePro(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+                DrawTexturePro(tile, grassRec, {grassScroll +  (float)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+                DrawTexturePro(tile, grassRec, {grassScroll_b +  (float)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            }
+            // DrawTexturePro(tile, grassRec, {grassScroll, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
 
             // DrawTextureRecEx(tile, grassRec, {0,0}, 0, 2.5, WHITE);
-            // DrawTextureRec(tile, grassRec, {0, 500}, WHITE);
+            // DrawTextureRec(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y}, WHITE);
             
             // DrawTextureEx(backgrounds[back_counter], { scroller, 20 }, 0.0f, 2.5f, WHITE);
             // DrawTextureEx(backgrounds[back_counter], { backgrounds[back_counter].width*2 + scroller, 20 }, 0.0f, 2.5f, WHITE);
@@ -227,8 +243,11 @@ int main(int argc, char** argv) {
             
 
         EndDrawing();
+        bird_pos.y ++;
         x1 -= background_speed;
         x2 -= background_speed;
+        grassScroll -= background_speed;
+        grassScroll_b -= background_speed;
     }
     UnloadTexture(testTexture);
     CloseWindow();
