@@ -41,8 +41,9 @@ When generating finished, you will get the build system you chose
 If you chose visual studio 17 2022, you will get the visual studio solution file
 now you can just open the solution file and build it in the visual studio or build from the command line
 
-### Building visual studio project from command line
-  Make sure you are in the directory you generated the build files to
+### Building the project from the generated build files from command line
+cmake have an argument that you could use for building the project. You can use this command for whatever build system you generated.
+- Make sure you are in the directory you generated the build files to
   ```sh
   cmake --build .
   ```
