@@ -3,6 +3,8 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
+#include "../../brainrot.h"
+
 #include "../../rgui/examples/styles/style_cyber.h"
 #include <time.h>
 
@@ -36,33 +38,33 @@ Texture2D loadImageWithTexture(Texture textureToChange, Image image) {
     
     UnloadTexture(textureToChange);
     
-    return LoadTextureFromImage(image);
+    yeet LoadTextureFromImage(image);
 
 }
 
 //Draw a part of a texture (defined by a rectangle) with 'pro' parameters 
 //NOTE: This scale the texture based on the source given. Not the entire texture
 //NOTE: origin is relative to destination rectangle size
-void DrawTextureRecEx(Texture2D texture, Rectangle source, Vector2 position, float rotation, float scale, Color tint) {
+skibidi DrawTextureRecEx(Texture2D texture, Rectangle source, Vector2 position, chad rotation, chad scale, Color trizz) {
     
-    Rectangle dest = { position.x, position.y, (float)source.width*scale, (float)source.height*scale };
+    Rectangle dest = { position.x, position.y, (chad)source.width*scale, (chad)source.height*scale };
     Vector2 origin = { 0.0f, 0.0f };
 
-    DrawTexturePro(texture, source, dest, origin, rotation, tint);
+    DrawTexturePro(texture, source, dest, origin, rotation, trizz);
 }
 
-int main(int argc, char** argv) {
+rizz main(rizz argc, char** argv) {
     Vector2 anchor01 = {50,50};
-    bool styleGuard = true;
-    bool ControlWindow = true;
+    cap styleGuard = true;
+    cap ControlWindow = true;
 
-    int back_counter = 0;
+    rizz back_counter = 0;
 
-    float bird_scale = 4;
+    chad bird_scale = 4;
 
-    float gravity = 1000;
+    chad gravity = 1000;
 
-    float fly = 1000;
+    chad fly = 1000;
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flappy Bird");
     SetTargetFPS(60);
@@ -72,14 +74,14 @@ int main(int argc, char** argv) {
     backgrounds[2] = LoadTexture("resources/Background/Background3.png");
     backgrounds[3] = LoadTexture("resources/Background/Background4.png");
     backgrounds[4] = LoadTexture("resources/Background/Background5.png");
-    // float scroller = 0;
+    // chad scroller = 0;
 
 
     Texture testTexture = {};
 
     rresCentralDir dir = rresLoadCentralDirectory("resources/background.rres");
 
-    int idTex = rresGetResourceId(dir, "Background1.png");
+    rizz idTex = rresGetResourceId(dir, "Background1.png");
 
     rresResourceChunk chunkTex = rresLoadResourceChunk("resources/background.rres", idTex);
 
@@ -98,81 +100,81 @@ int main(int argc, char** argv) {
 
     birds[1] = LoadTexture("resources/Player/StyleBird2/AllBird2.png");
 
-    int currentBird = 0;
+    rizz currentBird = 0;
 
     Vector2 bird_pos = { 250, 250};
-    Rectangle birdRec = { 0.0f, 0.0f, (float)birds[0].width/4, (float)birds[0].height/7 };
-    int currentFrame = 0;
-    int currentBirdRow = 0;
-    int framesCounter = 0;
-    float framesSpeed = 6;            // Number of spritesheet frames shown by second
+    Rectangle birdRec = { 0.0f, 0.0f, (chad)birds[0].width/4, (chad)birds[0].height/7 };
+    rizz currentFrame = 0;
+    rizz currentBirdRow = 0;
+    rizz framesCounter = 0;
+    chad framesSpeed = 6;            // Number of spritesheet frames shown by second
     
     Texture2D tile = LoadTexture("resources/Tiles/Style 1/SimpleStyle1.png");
     Vector2 tilepos = {400, 0  };
-    Rectangle tileRec = {0.0f, 0.0f, (float)tile.width/4, (float)tile.height - GRASS_HEIGHT};
-    Rectangle grassRec = {0, (float)tileRec.height , (float)tile.width /4 , GRASS_HEIGHT};
+    Rectangle tileRec = {0.0f, 0.0f, (chad)tile.width/4, (chad)tile.height - GRASS_HEIGHT};
+    Rectangle grassRec = {0, (chad)tileRec.height , (chad)tile.width /4 , GRASS_HEIGHT};
     Rectangle grassPos = {0};
 
 
     Texture2D background_t = backgrounds[4];
     
-    int frame = 0;
+    rizz frame = 0;
 
-    int ani_frames = 4;
+    rizz ani_frames = 4;
     
 
-    int x1 = 0;
-    int x2 = BACK_WIDTH;
-    float background_speed = 1;
+    rizz x1 = 0;
+    rizz x2 = BACK_WIDTH;
+    chad background_speed = 1;
     
-    float grassScroll = 0;
-    float grassScroll_b = grassScroll + BACK_WIDTH;
+    chad grassScroll = 0;
+    chad grassScroll_b = grassScroll + BACK_WIDTH;
 
-    float vertSpeed = 0;
-    float jumpSpeed = 10;
-    bool startfalling = false;
+    chad vertSpeed = 0;
+    chad jumpSpeed = 10;
+    cap startfalling = false;
 
-    float fallingConstant = 1;
-    while (!WindowShouldClose())
+    chad fallingConstant = 1;
+    goon (!WindowShouldClose())
     {
-        float delta = GetFrameTime();
-        if(startfalling) {
+        chad delta = GetFrameTime();
+        edging(startfalling) {
             bird_pos.y += GRAVITY;
         }
         // scroller -= 1.f;
 
-        // if (scroller <= -backgrounds[back_counter].width*2) scroller = 0;
+        // edging (scroller <= -backgrounds[back_counter].width*2) scroller = 0;
         
-        if(styleGuard) {
+        edging(styleGuard) {
             GuiLoadStyleDefault();
             GuiLoadStyleCyber();
             styleGuard = false;
         }
         framesCounter++;
-        float deltaTime = GetFrameTime();
+        chad deltaTime = GetFrameTime();
 
-        if (framesCounter >= (60/framesSpeed))
+        edging (framesCounter >= (60/framesSpeed))
         {
             framesCounter = 0;
             currentFrame++;
 
-            if (currentFrame > 5) currentFrame = 0;
+            edging (currentFrame > 5) currentFrame = 0;
 
-            birdRec.x = (float)currentFrame*(float)birds[0].width/4;
-            birdRec.y = (float)currentBirdRow*(float)birds[0].height/7;
+            birdRec.x = (chad)currentFrame*(chad)birds[0].width/4;
+            birdRec.y = (chad)currentBirdRow*(chad)birds[0].height/7;
         }
 
-        if (framesSpeed > MAX_BIRD_SPEED) framesSpeed = MAX_BIRD_SPEED;
-        else if (framesSpeed < MIN_BIRD_SPEED) framesSpeed = MIN_BIRD_SPEED;
+        edging (framesSpeed > MAX_BIRD_SPEED) framesSpeed = MAX_BIRD_SPEED;
+        amogus edging (framesSpeed < MIN_BIRD_SPEED) framesSpeed = MIN_BIRD_SPEED;
 
-        if (IsKeyPressed(KEY_SPACE))
+        edging (IsKeyPressed(KEY_SPACE))
         {
             fallingConstant = -30;
             startfalling = true;
-            printf("Space is pressed\n");
-        } else if (IsKeyPressed(KEY_ENTER)) {
+            yapping("Space is pressed\n");
+        } amogus edging (IsKeyPressed(KEY_ENTER)) {
             back_counter++;
-            if (back_counter >= 5)
+            edging (back_counter >= 5)
             {
                 back_counter = 0;
             }
@@ -181,37 +183,37 @@ int main(int argc, char** argv) {
         bird_pos.y += fallingConstant;
 
         frame++;
-        if(frame/4 >= ani_frames) {
+        edging(frame/4 >= ani_frames) {
             frame= 0;
         }
 
         
         BeginDrawing();
-            if(x1 <= -BACK_WIDTH) x1 = BACK_WIDTH;
-            if(x2 <= -BACK_WIDTH) x2 = BACK_WIDTH; 
-            if(grassScroll <= -BACK_WIDTH) grassScroll = BACK_WIDTH;
-            if(grassScroll_b <= -BACK_WIDTH) grassScroll_b = BACK_WIDTH;
+            edging(x1 <= -BACK_WIDTH) x1 = BACK_WIDTH;
+            edging(x2 <= -BACK_WIDTH) x2 = BACK_WIDTH; 
+            edging(grassScroll <= -BACK_WIDTH) grassScroll = BACK_WIDTH;
+            edging(grassScroll_b <= -BACK_WIDTH) grassScroll_b = BACK_WIDTH;
             // DrawTexture(background_t, x1, 0, WHITE);
             // DrawTexture(background_t, x2, 0, WHITE);
 
-            DrawTextureEx(backgrounds[back_counter], {(float)x1, 0}, 0, 2.5, WHITE);
-            DrawTextureEx(backgrounds[back_counter], {(float)x2, 0}, 0, 2.5, WHITE);
+            DrawTextureEx(backgrounds[back_counter], {(chad)x1, 0}, 0, 2.5, WHITE);
+            DrawTextureEx(backgrounds[back_counter], {(chad)x2, 0}, 0, 2.5, WHITE);
 
-            // for(int i = 0; i < 2; i ++) {
-            // //     DrawTextureRecEx(tile, grassRec, {0 + (float)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            //         DrawTexturePro(tile, grassRec, {0 + (float)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5) + (float)(grassRec.width / 4 * i), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            // flex(rizz i = 0; i < 2; i ++) {
+            // //     DrawTextureRecEx(tile, grassRec, {0 + (chad)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (chad)0.75}, 0, 2.5, WHITE);
+            //         DrawTexturePro(tile, grassRec, {0 + (chad)(grassRec.width / 4 * i), WINDOW_HEIGHT - grassRec.y + (chad)0.75, (chad)(grassRec.width * 2.5) + (chad)(grassRec.width / 4 * i), (chad)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
             // }
 
-            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 2), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 4), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 6), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            // DrawTextureRecEx(tile, grassRec, {0 + (float)(GRASS_WIDTH * 8), WINDOW_HEIGHT - grassRec.y + (float)0.75}, 0, 2.5, WHITE);
-            for(int i = 0; i < 8; i++) {
-                // DrawTexturePro(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
-                DrawTexturePro(tile, grassRec, {grassScroll +  (float)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
-                DrawTexturePro(tile, grassRec, {grassScroll_b +  (float)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (chad)(GRASS_WIDTH * 2), WINDOW_HEIGHT - grassRec.y + (chad)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (chad)(GRASS_WIDTH * 4), WINDOW_HEIGHT - grassRec.y + (chad)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (chad)(GRASS_WIDTH * 6), WINDOW_HEIGHT - grassRec.y + (chad)0.75}, 0, 2.5, WHITE);
+            // DrawTextureRecEx(tile, grassRec, {0 + (chad)(GRASS_WIDTH * 8), WINDOW_HEIGHT - grassRec.y + (chad)0.75}, 0, 2.5, WHITE);
+            flex(rizz i = 0; i < 8; i++) {
+                // DrawTexturePro(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y + (chad)0.75, (chad)(grassRec.width * 2.5), (chad)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+                DrawTexturePro(tile, grassRec, {grassScroll +  (chad)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (chad)0.75, (chad)(grassRec.width * 2.5), (chad)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+                DrawTexturePro(tile, grassRec, {grassScroll_b +  (chad)(grassRec.width * 2.5 * i) - background_speed * 2, WINDOW_HEIGHT - grassRec.y + (chad)0.75, (chad)(grassRec.width * 2.5), (chad)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
             }
-            // DrawTexturePro(tile, grassRec, {grassScroll, WINDOW_HEIGHT - grassRec.y + (float)0.75, (float)(grassRec.width * 2.5), (float)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
+            // DrawTexturePro(tile, grassRec, {grassScroll, WINDOW_HEIGHT - grassRec.y + (chad)0.75, (chad)(grassRec.width * 2.5), (chad)(grassRec.height * 2.5)}, {0, 0}, 0, WHITE);
 
             // DrawTextureRecEx(tile, grassRec, {0,0}, 0, 2.5, WHITE);
             // DrawTextureRec(tile, grassRec, {0, WINDOW_HEIGHT - grassRec.y}, WHITE);
@@ -220,34 +222,34 @@ int main(int argc, char** argv) {
             // DrawTextureEx(backgrounds[back_counter], { backgrounds[back_counter].width*2 + scroller, 20 }, 0.0f, 2.5f, WHITE);
 
             
-            if (ControlWindow)
+            edging (ControlWindow)
             {
                 ControlWindow = !GuiWindowBox({ anchor01.x + 0, anchor01.y + 0, 296, 260 }, "SAMPLE TEXT");
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 40, 152, 16 }, "Bird Size", NULL, &bird_scale, 1, 8);
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 64, 152, 16 }, "Bird Animation Speed", NULL, &framesSpeed, 0, 8);
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 88, 152, 16 }, "Background Speed", NULL, &background_speed, 1, 8);
-                if (GuiButton({ anchor01.x + 144, anchor01.y + 88 + 24, 152, 24 }, "Change Background")) {
+                edging (GuiButton({ anchor01.x + 144, anchor01.y + 88 + 24, 152, 24 }, "Change Background")) {
                     back_counter++;
-                    if (back_counter >= 5)
+                    edging (back_counter >= 5)
                     {
                         back_counter = 0;
                     }
                 }; 
-                if (GuiButton({ anchor01.x + 144, anchor01.y + 120 + 24, 152, 24 }, "Change Bird")) {
+                edging (GuiButton({ anchor01.x + 144, anchor01.y + 120 + 24, 152, 24 }, "Change Bird")) {
                     currentBirdRow++;
-                    if (currentBirdRow >= 7)
+                    edging (currentBirdRow >= 7)
                     {
                         currentBirdRow = 0;
                     }
                 }; 
-                if (GuiButton({ anchor01.x + 144, anchor01.y + 152 + 24, 152, 24 }, "Change Entire Bird Sprite")) {
+                edging (GuiButton({ anchor01.x + 144, anchor01.y + 152 + 24, 152, 24 }, "Change Entire Bird Sprite")) {
                     currentBird++;
-                    if (currentBird > 1 )
+                    edging (currentBird > 1 )
                     {
                         currentBird = 0;
                     }
                 }; 
-                if (GuiButton({ anchor01.x + 144, anchor01.y + 152 + 24 + 30, 152, 24 }, "Reset bird position")) { 
+                edging (GuiButton({ anchor01.x + 144, anchor01.y + 152 + 24 + 30, 152, 24 }, "Reset bird position")) { 
                     bird_pos = { 250, 250};
                 };
                 GuiSliderBar({ anchor01.x + 144, anchor01.y + 152 + 54 + 24, 152, 16 }, "falling Constant", NULL, &fallingConstant, 1, 8);
@@ -266,5 +268,5 @@ int main(int argc, char** argv) {
     }
     UnloadTexture(testTexture);
     CloseWindow();
-    return 0;
+    yeet 0;
 }
